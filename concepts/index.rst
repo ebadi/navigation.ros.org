@@ -196,6 +196,11 @@ Use of a separate smoother over one that is included as part of a planner is adv
 The general task in Nav2 for a smoother is to receive a path and return its improved version.
 However, for different input paths, criteria of the improvements and methods of acquiring them exist, creating space for a multitude of smoothers that can be registered in this server.
 
+Robot Footprints
+================
+
+It is worth remarking that in the cost maps, we set a robot's footprint either as a circle of radius ``robot_radius`` or as a vector of points ``footprint`` representing an arbitrary polygon if the robot is non-circular. This can also be adjusted over time using the costmap's ``~/footprint`` topic, which will update the polygon over time as needed due to changes in the robot's state, such as movement of an attached manipulator, picking up a pallet, or other actions that adjust a robot's shape. That polygon will then automatically be used by the planners and controllers.
+
 Waypoint Following
 ==================
 
@@ -218,7 +223,7 @@ In the second, the ``nav2_waypoint_follower`` is a nice sample application / pro
 Neither is better than the other, it highly depends on the tasks your robot(s) are completing, in what type of environment, and with what cloud resources available. Often this distinction is very clear for a given business case.
 
 ``nav2_waypoint_follower`` also supports GPS waypoint following when global localization is provided by `robot_localization <https://github.com/cra-ros-pkg/robot_localization/>`_  using the ``navsat_transform`` node - but also may be provided by Fuse or any number of other sources.
-There is an action server named ``/follow_gps_waypoints`` within ``nav2_waypoint_follower`` thah can directly take in goals expressed in GPS coordinates, convert them to cartesian goals in the global frame, and execute them as cartesian waypoints.
+There is an action server named ``/follow_gps_waypoints`` within ``nav2_waypoint_follower`` that can directly take in goals expressed in GPS coordinates, convert them to cartesian goals in the global frame, and execute them as cartesian waypoints.
 
 State Estimation
 ****************
